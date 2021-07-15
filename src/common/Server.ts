@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import debug, { IDebugger } from 'debug';
 
-import { RoutesConfigurer } from './classes/';
+import { RoutesConfigurer, Service } from './classes/';
 
 const debugLog: IDebugger = debug('app: Server');
 
@@ -24,6 +24,14 @@ export default class Server {
             r.configureRoutes(this.app);
 
             debugLog(`Routes configured: ${r.name}`);
+        }
+    }
+
+    public async initializeServices(...services: Service[]): Promise<void> {
+        for (const s of services) {
+            await s.initialize();
+
+            debugLog(`Service initialized: ${s.name}`);
         }
     }
 
