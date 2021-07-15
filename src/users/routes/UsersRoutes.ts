@@ -1,6 +1,7 @@
-import { Application, Request, Response } from 'express';
+import { Application } from 'express';
 
 import { RoutesConfigurer } from '../../common/classes';
+import { UsersControllers } from '..';
 
 export default class UsersRoutes extends RoutesConfigurer {
     public constructor() {
@@ -9,13 +10,13 @@ export default class UsersRoutes extends RoutesConfigurer {
 
     public configureRoutes(app: Application) {
         app.route('/users')
-            .get((req: Request, res: Response) => res.status(200).send('List of users.'))
-            .post((req: Request, res: Response) => res.status(201).send('User Created.'));
+            .get(UsersControllers.listUsers)
+            .post(UsersControllers.createUser);
 
         app.route('/users/:userId')
-            .get((req: Request, res: Response) => res.status(200).send(`Get user with id {${req.params.userId}}`))
-            .put((req: Request, res: Response) => res.status(200).send(`Put to user with id {${req.params.userId}}.`))
-            .patch((req: Request, res: Response) => res.status(200).send(`Patch to user with id {${req.params.userId}}`))
-            .delete((req: Request, res: Response) => res.status(200).send(`Delete user with id {${req.params.userId}}`));
+            .get(UsersControllers.getUserById)
+            .put(UsersControllers.putUserById)
+            .patch(UsersControllers.patchUserById)
+            .delete(UsersControllers.deleteUserById);
     }
 }

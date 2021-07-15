@@ -5,5 +5,6 @@ import PutUserDto from './dto/PutUserDto.js';
 import PatchUserDto from './dto/PatchUserDto.js';
 import UsersDao from './dao/UsersDao.js';
 import UserModel from './model/UserModel.js';
+import UsersControllers from './controllers/UsersControllers.js';
 
-export { UsersRoutes, CreateUserDto, GetUserDto, PutUserDto, PatchUserDto, UsersDao, UserModel };
+export { UsersRoutes, CreateUserDto, GetUserDto, PutUserDto, PatchUserDto, UsersDao, UserModel, UsersControllers };
