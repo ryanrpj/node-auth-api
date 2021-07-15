@@ -1,9 +1,11 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import debug, { IDebugger } from 'debug';
 
 import { RoutesConfigurer, Service } from './classes/';
+import { HttpStatusCode } from './enums';
+import { Strings } from './constants';
 
 const debugLog: IDebugger = debug('app: Server');
 
@@ -27,6 +29,8 @@ export default class Server {
 
             debugLog(`Routes configured: ${r.name}`);
         }
+
+        this.setErrorHandler();
     }
 
     public async initializeServices(...services: Service[]): Promise<void> {
@@ -42,6 +46,20 @@ export default class Server {
     public listen(): void {
         this.app.listen(this.portNumber, () => {
             console.log(`All done! Server is ready and listening for requests at port ${this.portNumber}.`);
+        });
+    }
+
+    private setErrorHandler(): void {
+        this.app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+            if (error.canBeSentToClient)
+                return res.status(error.statusCode).send(error.errorMessage);
+
+            if (error.type === 'entity.parse.failed')
+                return res.status(HttpStatusCode.BAD_REQUEST).send(Strings.error.INVALID_JSON);
+
+            console.log(error);
+
+            res.status(HttpStatusCode.BAD_REQUEST).send(Strings.error.INTERNAL_ERROR);
         });
     }
 }

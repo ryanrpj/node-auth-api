@@ -1,6 +1,7 @@
 import { Application } from 'express';
 
 import { RoutesConfigurer } from '../../common/classes';
+import { BodyMiddlewares } from '../../common/middlewares'
 import { UsersControllers, UsersMiddlewares } from '..';
 
 export default class UsersRoutes extends RoutesConfigurer {
@@ -13,6 +14,7 @@ export default class UsersRoutes extends RoutesConfigurer {
             .get(UsersControllers.listUsers)
             .post(
                 UsersMiddlewares.sanitizeUserForCreation,
+                BodyMiddlewares.checkIfSanitizationsFailed,
                 UsersControllers.createUser
             );
 
@@ -20,10 +22,12 @@ export default class UsersRoutes extends RoutesConfigurer {
             .get(UsersControllers.getUserById)
             .put(
                 UsersMiddlewares.sanitizeUserForPut,
+                BodyMiddlewares.checkIfSanitizationsFailed,
                 UsersControllers.putUserById
             )
             .patch(
                 UsersMiddlewares.sanitizeUserForPatch,
+                BodyMiddlewares.checkIfSanitizationsFailed,
                 UsersControllers.patchUserById
             )
             .delete(UsersControllers.deleteUserById);

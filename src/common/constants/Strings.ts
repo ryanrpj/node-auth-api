@@ -14,6 +14,8 @@ export default class Strings {
         PASSWORD_MISSING_UPPERCASE: 'Your password must contain at lease one uppercase letter.',
         TOO_SHORT_PASSWORD: 'Your password is too short. It must contain at least 8 characters.',
         TOO_LONG_PASSWORD: 'Your password is too long. It must not contain more than 200 characters',
+        INVALID_JSON: 'Your JSON is malformed. Please, check the syntax and try again.',
+        INTERNAL_ERROR: 'An internal error has occurred, and our team is already investigating it. Please, try again later.',
     };
 
     private static getInstance(): Strings {
