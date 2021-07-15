@@ -20,6 +20,8 @@ export default class Server {
     }
 
     public setRoutes(...routes: RoutesConfigurer[]): void {
+        console.log('Configuring routes...');
+
         for (const r of routes) {
             r.configureRoutes(this.app);
 
@@ -28,6 +30,8 @@ export default class Server {
     }
 
     public async initializeServices(...services: Service[]): Promise<void> {
+        console.log('Initializing services...');
+
         for (const s of services) {
             await s.initialize();
 
@@ -37,7 +41,7 @@ export default class Server {
 
     public listen(): void {
         this.app.listen(this.portNumber, () => {
-            console.log(`Server is ready and listening for requests at port ${this.portNumber}.`);
+            console.log(`All done! Server is ready and listening for requests at port ${this.portNumber}.`);
         });
     }
 }
