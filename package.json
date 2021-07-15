@@ -16,9 +16,9 @@
     "email": "esandeveloper@protonmail.com"
   },
   "scripts": {
-    "dev": "tsc && nodemon ./dist/app.js",
+    "dev": "export DEBUG=app* && tsc && nodemon --experimental-specifier-resolution=node ./dist/app.js",
     "test": "mocha -r test/**/*.test.js",
-    "start": "tsc && node ./dist/app"
+    "start": "tsc && node --experimental-specifier-resolution=node ./dist/app"
   },
   "dependencies": {
     "argon2": "^0.28.2",
