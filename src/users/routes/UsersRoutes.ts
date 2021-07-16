@@ -1,8 +1,9 @@
 import { Application } from 'express';
 
-import { RoutesConfigurer } from '../../common/classes';
-import { BodyMiddlewares } from '../../common/middlewares'
 import { UsersControllers, UsersMiddlewares } from '..';
+import { AuthMiddlewares } from '../../auth';
+import { RoutesConfigurer } from '../../common/classes';
+import { BodyMiddlewares } from '../../common/middlewares';
 
 export default class UsersRoutes extends RoutesConfigurer {
     public constructor() {
@@ -20,6 +21,10 @@ export default class UsersRoutes extends RoutesConfigurer {
 
         app.route('/users/:userId')
             .get(UsersControllers.getUserById)
+            .all(
+              AuthMiddlewares.checkIfUserIsAuthenticated,
+              AuthMiddlewares.onlySameUserCanDoThis,
+            )
             .put(
                 UsersMiddlewares.sanitizeUserForPut,
                 BodyMiddlewares.checkIfSanitizationsFailed,

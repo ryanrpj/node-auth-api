@@ -13,10 +13,15 @@ export default class Strings {
         PASSWORD_MISSING_LOWERCASE: 'Your password must contain at least one lowercase letter.',
         PASSWORD_MISSING_UPPERCASE: 'Your password must contain at lease one uppercase letter.',
         TOO_SHORT_PASSWORD: 'Your password is too short. It must contain at least 8 characters.',
-        TOO_LONG_PASSWORD: 'Your password is too long. It must not contain more than 200 characters',
+        TOO_LONG_PASSWORD: 'Your password is too long. It must not contain more than 200 characters.',
         INVALID_JSON: 'Your JSON is malformed. Please, check the syntax and try again.',
         INTERNAL_ERROR: 'An internal error has occurred, and our team is already investigating it. Please, try again later.',
         WRONG_CREDENTIALS: 'Invalid e-mail and/or password. Please, try again.',
+        UNAUTHORIZED: 'You must be authenticated to perform this actionk.',
+        FORBIDDEN: 'You don\'t have permission do to this action.',
+        NOT_BEARER_HEADER: 'The authentication header must be Bearer.',
+        MISSING_AUTH_TOKEN: 'You Bearer authentication header is missing the authentication token.',
+        INVALID_AUTH_TOKEN: 'The authentication token you provided is invalid. Please, login again in order to obtain a valid token.',
     };
 
     private static getInstance(): Strings {
