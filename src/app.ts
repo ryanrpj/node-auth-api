@@ -1,3 +1,4 @@
+import { AuthRoutes } from './auth';
 import Server from './common/Server.js';
 import { MongooseService } from './common/services/';
 import { UsersRoutes } from './users';
@@ -10,6 +11,7 @@ await server.initializeServices(
 
 server.setRoutes(
     new UsersRoutes(),
+    new AuthRoutes(),
 );
 
 server.listen();

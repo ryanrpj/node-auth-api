@@ -42,7 +42,7 @@ export default class UsersMiddlewares {
         );
     }
 
-    private static get sanitizeEmail(): Function {
+    public static get sanitizeEmail(): Function {
         return UsersMiddlewares.buildSanitizer(
             body('email')
                 .notEmpty().withMessage(Strings.error.EMPTY_EMAIL)
@@ -51,7 +51,7 @@ export default class UsersMiddlewares {
         );
     }
 
-    private static get sanitizePassword(): Function {
+    public static get sanitizePassword(): Function {
         return UsersMiddlewares.buildSanitizer(
             body('password')
                 .notEmpty().withMessage(Strings.error.EMPTY_PASSWORD)

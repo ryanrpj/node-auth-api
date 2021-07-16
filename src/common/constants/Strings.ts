@@ -16,6 +16,7 @@ export default class Strings {
         TOO_LONG_PASSWORD: 'Your password is too long. It must not contain more than 200 characters',
         INVALID_JSON: 'Your JSON is malformed. Please, check the syntax and try again.',
         INTERNAL_ERROR: 'An internal error has occurred, and our team is already investigating it. Please, try again later.',
+        WRONG_CREDENTIALS: 'Invalid e-mail and/or password. Please, try again.',
     };
 
     private static getInstance(): Strings {

@@ -1,6 +1,10 @@
-import { Application, NextFunction, Request, Response } from 'express';
+import { Application } from 'express';
 
 import { RoutesConfigurer } from '../../common/classes';
+import { BodyMiddlewares } from '../../common/middlewares';
+import { UsersMiddlewares } from '../../users';
+import AuthControllers from '../controllers/AuthControllers';
+
 
 export default class AuthRoutes extends RoutesConfigurer {
     public constructor() {
@@ -8,9 +12,11 @@ export default class AuthRoutes extends RoutesConfigurer {
     }
 
     public configureRoutes(app: Application): void {
-        app.route('/auth')
-        .post((req: Request, res: Response, next: NextFunction) => {
-            res.status(200).send('User authenticated.');
-        });
+        app.route('/auth').post(
+            UsersMiddlewares.sanitizeEmail({required: true}),
+            UsersMiddlewares.sanitizePassword({required: true}),
+            BodyMiddlewares.checkIfSanitizationsFailed,
+            AuthControllers.authenticateUser
+            );
     }
 }
