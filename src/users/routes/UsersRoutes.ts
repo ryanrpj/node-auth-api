@@ -16,6 +16,7 @@ export default class UsersRoutes extends RoutesConfigurer {
             .post(
                 UsersMiddlewares.sanitizeUserForCreation,
                 BodyMiddlewares.checkIfSanitizationsFailed,
+                UsersMiddlewares.extractUserFromRequestBody,
                 UsersControllers.createUser
             );
 
@@ -24,6 +25,7 @@ export default class UsersRoutes extends RoutesConfigurer {
             .all(
               AuthMiddlewares.checkIfUserIsAuthenticated,
               AuthMiddlewares.onlySameUserCanDoThis,
+              UsersMiddlewares.extractUserFromRequestBody,
             )
             .put(
                 UsersMiddlewares.sanitizeUserForPut,

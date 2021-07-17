@@ -5,23 +5,19 @@ import { HttpStatusCode } from '../../common/enums';
 
 export default class UsersControllers {
     public static async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { firstName, lastName, email, password } = req.body;
-
-        const userId = await UsersDao.getInstance().create({ firstName, lastName, email, password });
+        const userId = await UsersDao.getInstance().create(req.body.user);
 
         res.status(HttpStatusCode.OK).send({ created: userId });
     }
 
     public static async getUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { userId } = req.params;
-
-        const user = await UsersDao.getInstance().getById(userId);
+        const user = await UsersDao.getInstance().getById(req.params.userId);
 
         res.status(HttpStatusCode.OK).send(user);
     }
 
     public static async listUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { limit, page } = req.query;
+        const { limit, page } = req.query || {};
 
         const users = await UsersDao.getInstance().list(+limit!, +page!);
 
@@ -29,28 +25,20 @@ export default class UsersControllers {
     }
 
     public static async putUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { userId } = req.params;
-        const { firstName, lastName, email, password } = req.body;
-
-        const editedUser = await UsersDao.getInstance().putById(userId, { firstName, lastName, email, password });
+        const editedUser = await UsersDao.getInstance().putById(req.params.userId, req.body.user);
 
         res.status(HttpStatusCode.OK).send(editedUser);
     }
 
     public static async patchUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { userId } = req.params;
-        const { firstName, lastName, email, password } = req.body;
-
-        const patchedUser = await UsersDao.getInstance().patchById(userId, { firstName, lastName, email, password });
+        const patchedUser = await UsersDao.getInstance().patchById(req.params.userId, req.body.user);
 
         res.status(HttpStatusCode.OK).send(patchedUser);
     }
 
     public static async deleteUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const { userId } = req.params;
+        await UsersDao.getInstance().deleteById(req.params.userId);
 
-        await UsersDao.getInstance().deleteById(userId);
-
-        res.status(HttpStatusCode.OK).send({ deleted: userId });
+        res.status(HttpStatusCode.OK).send({ deleted: req.params.userId });
     }
 }
