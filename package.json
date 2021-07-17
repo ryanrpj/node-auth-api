@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "export DEBUG=app* && tsc && nodemon --experimental-specifier-resolution=node ./dist/app.js",
-    "test": "mocha -r test/**/*.test.js",
+    "test": "mocha test/**/*.test.js --experimental-specifier-resolution=node",
     "start": "tsc && node --experimental-specifier-resolution=node ./dist/app"
   },
   "dependencies": {
